@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
@@ -8,6 +9,16 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: Colors.background,
+          borderTopWidth: 0,
+        },
+        tabBarActiveTintColor: Colors.accent,
+        tabBarInactiveTintColor: Colors.text_faded,
       }}
     >
       <Tabs.Screen
