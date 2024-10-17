@@ -108,7 +108,8 @@ const Home = () => {
             <Text
               style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
             >
-              Bitcoin
+              Bitcoin{' '}
+              <Text style={{ color: Colors.accent, fontSize: 24 }}>BTC</Text>
             </Text>
           </View>
         )}
