@@ -28,7 +28,10 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
+      ["expo-router",
+        {
+          "origin": "https://karl-george.vercel.app/"
+        }],
       "expo-font"
     ],
     "experiments": {
