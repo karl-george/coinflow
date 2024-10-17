@@ -22,6 +22,16 @@ const Home = () => {
           <Text style={styles.name}>Hello Karl</Text>
         </View>
       </View>
+
+      {/* Trending */}
+      <View style={{ marginVertical: 48 }}>
+        <Text style={styles.subtitle}>Trending Coins</Text>
+        <View style={styles.trending_row}></View>
+      </View>
+
+      {/* Latest Chart */}
+
+      {/* Latest Coins */}
     </View>
   );
 };
@@ -44,5 +54,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Colors.text,
     fontFamily: 'Montserrat_700Bold',
+  },
+  subtitle: {
+    fontWeight: 'semibold',
+    fontSize: 20,
+    color: Colors.text,
+    fontFamily: 'Montserrat_600SemiBold',
+  },
+  trending_row: {
+    flexDirection: 'row',
+    gap: 6,
   },
 });
