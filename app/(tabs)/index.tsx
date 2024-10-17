@@ -1,10 +1,25 @@
 import { Colors } from '@/constants/Colors';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { info } from '@/data/info';
+import { listings } from '@/data/listings';
 
 const Home = () => {
   const { top } = useSafeAreaInsets();
+
+  // useEffect(() => {
+  //   const getCoins = async () => {
+  //     try {
+  //       const res = await fetch('/api/listings');
+  //       const data = await res.json();
+  //       console.log(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getCoins();
+  // }, []);
 
   return (
     <View style={[styles.container, { paddingTop: top + 42 }]}>
@@ -26,7 +41,17 @@ const Home = () => {
       {/* Trending */}
       <View style={{ marginVertical: 48 }}>
         <Text style={styles.subtitle}>Trending Coins</Text>
-        <View style={styles.trending_row}></View>
+        <View style={styles.trending_row}>
+          {listings.map((coin) => (
+            <View>
+              <Image
+                source={{ uri: info?.[coin.id].logo }}
+                style={{ width: 32, height: 32 }}
+              />
+              <Text style={styles.subtitle}>{coin.name}</Text>
+            </View>
+          ))}
+        </View>
       </View>
 
       {/* Latest Chart */}
