@@ -1,9 +1,10 @@
+import CoinCard from '@/components/CoinCard';
 import { Colors } from '@/constants/Colors';
-import React, { useEffect } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { info } from '@/data/info';
 import { listings } from '@/data/listings';
+import { Currency } from '@/interfaces/crypto';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Home = () => {
   const { top } = useSafeAreaInsets();
@@ -32,7 +33,6 @@ const Home = () => {
           resizeMode='contain'
           style={{ width: 80, height: 80 }}
         />
-        {/* Text */}
         <View>
           <Text style={styles.name}>Hello Karl</Text>
         </View>
@@ -41,17 +41,16 @@ const Home = () => {
       {/* Trending */}
       <View style={{ marginVertical: 48 }}>
         <Text style={styles.subtitle}>Trending Coins</Text>
-        <View style={styles.trending_row}>
-          {listings.map((coin) => (
-            <View>
-              <Image
-                source={{ uri: info?.[coin.id].logo }}
-                style={{ width: 32, height: 32 }}
-              />
-              <Text style={styles.subtitle}>{coin.name}</Text>
-            </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: 10 }}
+          style={styles.trending_row}
+        >
+          {listings.map((currency: Currency) => (
+            <CoinCard currency={currency} />
           ))}
-        </View>
+        </ScrollView>
       </View>
 
       {/* Latest Chart */}
@@ -88,6 +87,14 @@ const styles = StyleSheet.create({
   },
   trending_row: {
     flexDirection: 'row',
-    gap: 6,
+  },
+  trendingCoins: {
+    width: 84,
+    height: 84,
+    backgroundColor: Colors.card_light,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    marginTop: 8,
   },
 });
