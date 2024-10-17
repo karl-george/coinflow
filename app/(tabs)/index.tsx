@@ -3,11 +3,38 @@ import { Colors } from '@/constants/Colors';
 import { listings } from '@/data/listings';
 import { Currency } from '@/interfaces/crypto';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CartesianChart, Line, useChartPressState } from 'victory-native';
+import { ticker } from '@/data/ticker';
+import { format } from 'date-fns';
+import {
+  listFontFamilies,
+  matchFont,
+  useFont,
+} from '@shopify/react-native-skia';
 
 const Home = () => {
   const { top } = useSafeAreaInsets();
+  const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
+
+  console.log(listFontFamilies());
+
+  const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
+  const fontStyle = {
+    fontFamily,
+    fontSize: 10,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+  };
+  const font = matchFont(fontStyle);
 
   // useEffect(() => {
   //   const getCoins = async () => {
@@ -51,13 +78,15 @@ const Home = () => {
           style={styles.trending_row}
         >
           {listings.map((currency: Currency) => (
-            <CoinCard currency={currency} />
+            <View key={currency.id}>
+              <CoinCard currency={currency} />
+            </View>
           ))}
         </ScrollView>
       </View>
 
       {/* Latest Chart */}
-      <View style={{ marginVertical: 36 }}>
+      <View style={{ marginTop: 36 }}>
         <View style={styles.text_row}>
           <Text style={styles.subtitle}>Latest</Text>
           <Text style={styles.seeMore}>See All</Text>
@@ -65,6 +94,48 @@ const Home = () => {
       </View>
 
       {/* Latest Coins */}
+      <View
+        style={{
+          height: 260,
+          backgroundColor: Colors.card_light,
+          borderRadius: 12,
+          marginTop: 8,
+          padding: 12,
+        }}
+      >
+        {ticker && (
+          <View>
+            <Text
+              style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
+            >
+              Bitcoin
+            </Text>
+          </View>
+        )}
+        <CartesianChart
+          axisOptions={{
+            font,
+            tickCount: 5,
+            labelOffset: { x: -2, y: 0 },
+            labelColor: Colors.text,
+            formatYLabel: (v) => `${v} €`,
+            formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
+          }}
+          data={ticker!}
+          xKey='timestamp'
+          yKeys={['price']}
+        >
+          {({ points }) => (
+            <>
+              <Line
+                points={points.price}
+                color={Colors.accent}
+                strokeWidth={3}
+              />
+            </>
+          )}
+        </CartesianChart>
+      </View>
     </View>
   );
 };
