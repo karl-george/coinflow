@@ -39,8 +39,11 @@ const Home = () => {
       </View>
 
       {/* Trending */}
-      <View style={{ marginVertical: 48 }}>
-        <Text style={styles.subtitle}>Trending Coins</Text>
+      <View style={{ marginTop: 48 }}>
+        <View style={styles.text_row}>
+          <Text style={styles.subtitle}>Trending Coins</Text>
+          <Text style={styles.seeMore}>See All</Text>
+        </View>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -54,6 +57,12 @@ const Home = () => {
       </View>
 
       {/* Latest Chart */}
+      <View style={{ marginVertical: 36 }}>
+        <View style={styles.text_row}>
+          <Text style={styles.subtitle}>Latest</Text>
+          <Text style={styles.seeMore}>See All</Text>
+        </View>
+      </View>
 
       {/* Latest Coins */}
     </View>
@@ -85,8 +94,17 @@ const styles = StyleSheet.create({
     color: Colors.text,
     fontFamily: 'Montserrat_600SemiBold',
   },
+  text_row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   trending_row: {
     flexDirection: 'row',
+  },
+  seeMore: {
+    color: Colors.accent,
+    fontFamily: 'Montserrat_600SemiBold',
   },
   trendingCoins: {
     width: 84,
