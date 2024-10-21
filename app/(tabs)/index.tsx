@@ -25,8 +25,6 @@ const Home = () => {
   const { top } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
 
-  console.log(listFontFamilies());
-
   const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
   const fontStyle = {
     fontFamily,
@@ -67,7 +65,7 @@ const Home = () => {
 
       {/* Trending */}
       <View style={{ marginTop: 48 }}>
-        <View style={styles.text_row}>
+        <View style={styles.textRow}>
           <Text style={styles.subtitle}>Trending Coins</Text>
           <Text style={styles.seeMore}>See All</Text>
         </View>
@@ -75,7 +73,7 @@ const Home = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 10 }}
-          style={styles.trending_row}
+          style={styles.trendingRow}
         >
           {listings.map((currency: Currency) => (
             <View key={currency.id}>
@@ -87,22 +85,13 @@ const Home = () => {
 
       {/* Latest Chart */}
       <View style={{ marginTop: 36 }}>
-        <View style={styles.text_row}>
+        <View style={styles.textRow}>
           <Text style={styles.subtitle}>Latest</Text>
           <Text style={styles.seeMore}>See All</Text>
         </View>
       </View>
 
-      {/* Latest Coins */}
-      <View
-        style={{
-          height: 260,
-          backgroundColor: Colors.card_light,
-          borderRadius: 12,
-          marginTop: 8,
-          padding: 12,
-        }}
-      >
+      <View style={styles.trendingChart}>
         {ticker && (
           <View>
             <Text
@@ -137,6 +126,9 @@ const Home = () => {
           )}
         </CartesianChart>
       </View>
+
+      {/* Latest Coins */}
+      <View></View>
     </View>
   );
 };
@@ -166,25 +158,23 @@ const styles = StyleSheet.create({
     color: Colors.text,
     fontFamily: 'Montserrat_600SemiBold',
   },
-  text_row: {
+  textRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  trending_row: {
+  trendingRow: {
     flexDirection: 'row',
   },
   seeMore: {
     color: Colors.accent,
     fontFamily: 'Montserrat_600SemiBold',
   },
-  trendingCoins: {
-    width: 84,
-    height: 84,
+  trendingChart: {
+    height: 260,
     backgroundColor: Colors.card_light,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 12,
     marginTop: 8,
+    padding: 12,
   },
 });
