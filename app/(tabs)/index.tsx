@@ -1,7 +1,12 @@
 import CoinCard from '@/components/CoinCard';
+import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
 import { listings } from '@/data/listings';
-import { Coin, Currency } from '@/interfaces/crypto';
+import { ticker } from '@/data/ticker';
+import { Currency } from '@/interfaces/crypto';
+import { matchFont } from '@shopify/react-native-skia';
+import { format } from 'date-fns';
+import { Link } from 'expo-router';
 import React from 'react';
 import {
   Image,
@@ -13,15 +18,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CartesianChart, Line, useChartPressState } from 'victory-native';
-import { ticker } from '@/data/ticker';
-import { format } from 'date-fns';
-import {
-  listFontFamilies,
-  matchFont,
-  useFont,
-} from '@shopify/react-native-skia';
-import { info } from '@/data/info';
-import CoinCardLarge from '@/components/CoinCardLarge';
 
 const Home = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -78,9 +74,9 @@ const Home = () => {
           style={styles.trendingRow}
         >
           {listings.map((currency: Currency) => (
-            <View key={currency.id}>
+            <Link href={`/coin/${currency.id}`} key={currency.id}>
               <CoinCard currency={currency} />
-            </View>
+            </Link>
           ))}
         </ScrollView>
       </View>
@@ -132,7 +128,9 @@ const Home = () => {
       {/* Latest Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
         {listings.slice(1).map((coin, i) => (
-          <CoinCardLarge coin={coin} />
+          <View key={coin.id}>
+            <CoinCardLarge coin={coin} />
+          </View>
         ))}
       </View>
     </ScrollView>
@@ -171,6 +169,7 @@ const styles = StyleSheet.create({
   },
   trendingRow: {
     flexDirection: 'row',
+    marginTop: 8,
   },
   seeMore: {
     color: Colors.accent,
