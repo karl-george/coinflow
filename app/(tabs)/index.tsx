@@ -1,7 +1,7 @@
 import CoinCard from '@/components/CoinCard';
 import { Colors } from '@/constants/Colors';
 import { listings } from '@/data/listings';
-import { Currency } from '@/interfaces/crypto';
+import { Coin, Currency } from '@/interfaces/crypto';
 import React from 'react';
 import {
   Image,
@@ -20,9 +20,10 @@ import {
   matchFont,
   useFont,
 } from '@shopify/react-native-skia';
+import { info } from '@/data/info';
 
 const Home = () => {
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
 
   const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
@@ -48,7 +49,7 @@ const Home = () => {
   // }, []);
 
   return (
-    <View style={[styles.container, { paddingTop: top + 42 }]}>
+    <ScrollView style={[styles.container, { paddingTop: top + 42 }]}>
       {/* Welcome */}
       <View style={styles.welcomeWrapper}>
         {/* Image */}
@@ -128,8 +129,52 @@ const Home = () => {
       </View>
 
       {/* Latest Coins */}
-      <View></View>
-    </View>
+      <View style={{ marginTop: 48, marginBottom: 48 }}>
+        {listings.slice(0).map((coin, i) => (
+          <View key={i} style={styles.cardLargeBG}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Image
+                source={{ uri: info?.[coin.id].logo }}
+                style={{ width: 64, height: 64 }}
+              />
+              <View style={{ flexDirection: 'column' }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'semibold',
+                    color: Colors.text,
+                  }}
+                >
+                  {coin.symbol}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: Colors.text_faded,
+                  }}
+                >
+                  {coin.name}
+                </Text>
+              </View>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: Colors.accent,
+                }}
+              >
+                {coin.quote.EUR.price.toFixed(0)}€
+              </Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -176,5 +221,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: 8,
     padding: 12,
+  },
+  cardLargeBG: {
+    backgroundColor: Colors.card_light,
+    borderRadius: 12,
+    marginBottom: 16,
+    padding: 8,
   },
 });
