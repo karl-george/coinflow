@@ -130,8 +130,8 @@ const Home = () => {
       </View>
 
       {/* Latest Coins */}
-      <View style={{ marginTop: 48, marginBottom: 128 }}>
-        {listings.slice(0).map((coin, i) => (
+      <View style={{ marginTop: 16, marginBottom: 128 }}>
+        {listings.slice(1).map((coin, i) => (
           <CoinCardLarge coin={coin} />
         ))}
       </View>
