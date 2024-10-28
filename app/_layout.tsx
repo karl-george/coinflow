@@ -72,7 +72,7 @@ const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={publishableKey}>
       <ClerkLoaded>
-        <InitialLayout />;
+        <InitialLayout />
       </ClerkLoaded>
     </ClerkProvider>
   );
