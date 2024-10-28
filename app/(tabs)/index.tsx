@@ -1,36 +1,18 @@
+import Chart from '@/components/Chart';
 import CoinCard from '@/components/CoinCard';
 import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
 import { listings } from '@/data/listings';
-import { ticker } from '@/data/ticker';
 import { Currency } from '@/interfaces/crypto';
-import { matchFont } from '@shopify/react-native-skia';
-import { format } from 'date-fns';
 import { Link } from 'expo-router';
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CartesianChart, Line, useChartPressState } from 'victory-native';
+import { useChartPressState } from 'victory-native';
 
 const Home = () => {
   const { top, bottom } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
-
-  const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
-  const fontStyle = {
-    fontFamily,
-    fontSize: 10,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-  };
-  const font = matchFont(fontStyle);
 
   // useEffect(() => {
   //   const getCoins = async () => {
@@ -89,41 +71,7 @@ const Home = () => {
         </View>
       </View>
 
-      <View style={styles.trendingChart}>
-        {ticker && (
-          <View>
-            <Text
-              style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
-            >
-              Bitcoin{' '}
-              <Text style={{ color: Colors.accent, fontSize: 24 }}>BTC</Text>
-            </Text>
-          </View>
-        )}
-        <CartesianChart
-          axisOptions={{
-            font,
-            tickCount: 5,
-            labelOffset: { x: -2, y: 0 },
-            labelColor: Colors.text,
-            formatYLabel: (v) => `${v} €`,
-            formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
-          }}
-          data={ticker!}
-          xKey='timestamp'
-          yKeys={['price']}
-        >
-          {({ points }) => (
-            <>
-              <Line
-                points={points.price}
-                color={Colors.accent}
-                strokeWidth={3}
-              />
-            </>
-          )}
-        </CartesianChart>
-      </View>
+      <Chart />
 
       {/* Latest Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
@@ -174,12 +122,5 @@ const styles = StyleSheet.create({
   seeMore: {
     color: Colors.accent,
     fontFamily: 'Montserrat_600SemiBold',
-  },
-  trendingChart: {
-    height: 260,
-    backgroundColor: Colors.card_light,
-    borderRadius: 12,
-    marginTop: 8,
-    padding: 12,
   },
 });
