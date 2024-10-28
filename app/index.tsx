@@ -7,15 +7,15 @@ const Index = () => {
   const { user } = useUser();
 
   return (
-    <View>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <SignedIn>
         <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
       </SignedIn>
       <SignedOut>
-        <Link href='/sign-in'>
+        <Link href='/signin'>
           <Text>Sign In</Text>
         </Link>
-        <Link href='/sign-up'>
+        <Link href='/signup'>
           <Text>Sign Up</Text>
         </Link>
       </SignedOut>
