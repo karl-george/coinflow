@@ -37,7 +37,7 @@ const Home = () => {
         <Image
           source={{ uri: user?.imageUrl }}
           resizeMode='contain'
-          style={{ width: 80, height: 80, borderRadius: 100 }}
+          style={{ width: 70, height: 70, borderRadius: 100 }}
         />
         <View>
           <Text style={styles.name}>{user?.firstName}</Text>
