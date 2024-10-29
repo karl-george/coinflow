@@ -10,8 +10,6 @@ const Page = () => {
   const { id } = useLocalSearchParams();
   const router = useRouter();
 
-  console.log(id);
-
   return (
     <View style={styles.container}>
       {/* Header */}
