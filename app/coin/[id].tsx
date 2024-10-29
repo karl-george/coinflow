@@ -54,9 +54,9 @@ const Page = () => {
       />
       {/* Chart */}
       <View style={{ marginTop: 16 }}>
-        <Chart />
+        <Chart height={460} />
       </View>
-      {/* Info */}
+      {/* Info Card */}
       <View style={styles.infoContainer}>
         <View style={styles.infoCard}>
           <View style={styles.textInfoRow}>
@@ -77,6 +77,25 @@ const Page = () => {
             <Text style={styles.textInfo}>Low</Text>
             <Text style={styles.textInfo}>123456</Text>
           </View>
+        </View>
+      </View>
+      {/* Details */}
+      <View style={{ marginTop: 24, gap: 16 }}>
+        <View style={styles.textInfoRow}>
+          <Text style={styles.textInfo}>Daily Change</Text>
+          <Text style={[styles.textInfo, { color: Colors.accent }]}>5.09%</Text>
+        </View>
+        <View style={styles.textInfoRow}>
+          <Text style={styles.textInfo}>Market Capital</Text>
+          <Text style={[styles.textInfo]}>$5325252</Text>
+        </View>
+        <View style={styles.textInfoRow}>
+          <Text style={styles.textInfo}>3M Drawdown</Text>
+          <Text style={[styles.textInfo, { color: 'red' }]}>-12</Text>
+        </View>
+        <View style={styles.textInfoRow}>
+          <Text style={styles.textInfo}>Enterprise Value</Text>
+          <Text style={[styles.textInfo]}>$5544</Text>
         </View>
       </View>
     </View>
@@ -114,6 +133,6 @@ const styles = StyleSheet.create({
   textInfo: {
     fontSize: 16,
     color: Colors.text,
-    fontFamily: 'Montserrat_600SemiBold',
+    fontFamily: 'Montserrat_400Regular',
   },
 });
