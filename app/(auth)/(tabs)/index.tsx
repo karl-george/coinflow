@@ -4,6 +4,7 @@ import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
 import { listings } from '@/data/listings';
 import { Currency } from '@/interfaces/crypto';
+import { useUser } from '@clerk/clerk-expo';
 import { Link } from 'expo-router';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -11,6 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useChartPressState } from 'victory-native';
 
 const Home = () => {
+  const { user } = useUser();
   const { top, bottom } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
 
@@ -32,14 +34,13 @@ const Home = () => {
       {/* Welcome */}
       <View style={styles.welcomeWrapper}>
         {/* Image */}
-        {/* //Todo: Fix image source when Clerk is in  */}
         <Image
-          source={require('@/assets/images/react-logo.png')}
+          source={{ uri: user?.imageUrl }}
           resizeMode='contain'
-          style={{ width: 80, height: 80 }}
+          style={{ width: 80, height: 80, borderRadius: 100 }}
         />
         <View>
-          <Text style={styles.name}>Hello Karl</Text>
+          <Text style={styles.name}>{user?.firstName}</Text>
         </View>
       </View>
 
