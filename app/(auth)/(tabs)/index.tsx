@@ -72,7 +72,7 @@ const Home = () => {
         </View>
       </View>
 
-      <Chart />
+      <Chart height={260} />
 
       {/* Latest Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
