@@ -6,7 +6,7 @@ import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { CartesianChart, Line } from 'victory-native';
 
-const Chart = () => {
+const Chart = ({ height }: { height: number }) => {
   const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
   const fontStyle = {
     fontFamily,
@@ -17,7 +17,7 @@ const Chart = () => {
   const font = matchFont(fontStyle);
 
   return (
-    <View style={styles.chart}>
+    <View style={[styles.chart, { height }]}>
       {ticker && (
         <View>
           <Text
@@ -55,7 +55,6 @@ export default Chart;
 
 const styles = StyleSheet.create({
   chart: {
-    height: 260,
     backgroundColor: Colors.card_light,
     borderRadius: 12,
     marginTop: 8,
