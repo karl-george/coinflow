@@ -1,16 +1,9 @@
 import { Colors } from '@/constants/Colors';
-import { useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Redirect, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import React from 'react';
 
 export default function TabLayout() {
-  const { isSignedIn } = useAuth();
-
-  if (isSignedIn) {
-    return <Redirect href={'/'} />;
-  }
-
   return (
     <Tabs
       screenOptions={{
