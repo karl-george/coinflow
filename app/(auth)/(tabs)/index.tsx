@@ -2,11 +2,11 @@ import Chart from '@/components/Chart';
 import CoinCard from '@/components/CoinCard';
 import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
-import { listings } from '@/data/listings';
 import { Currency } from '@/interfaces/crypto';
 import { useUser } from '@clerk/clerk-expo';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useChartPressState } from 'victory-native';
@@ -15,17 +15,21 @@ const Home = () => {
   const { user } = useUser();
   const { top, bottom } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
-  const [listings, setListings] = useState<Currency[]>([]);
 
-  // const getListings = async () => {
-  //   const res = await fetch('/api/listings');
-  //   const data = await res.json();
-  //   setListings(data);
-  // };
+  const currencies = useQuery({
+    queryKey: ['currencies'],
+    queryFn: () => fetch('/api/listings').then((res) => res.json()),
+  });
 
-  // useEffect(() => {
-  //   getListings();
-  // }, []);
+  const ids = currencies.data
+    ?.map((currency: Currency) => currency.id)
+    .join(',');
+
+  const coin = useQuery({
+    queryKey: ['info', ids],
+    queryFn: () => fetch(`/api/info?ids=${ids}`).then((res) => res.json()),
+    enabled: !!ids,
+  });
 
   return (
     <ScrollView style={[styles.container, { paddingTop: top + 42 }]}>
@@ -54,9 +58,9 @@ const Home = () => {
           contentContainerStyle={{ gap: 10 }}
           style={styles.trendingRow}
         >
-          {listings.map((currency: Currency) => (
+          {currencies.data?.map((currency: Currency) => (
             <Link href={`/coin/${currency.id}`} key={currency.id}>
-              <CoinCard currency={currency} />
+              <CoinCard currency={currency} coin={coin.data} />
             </Link>
           ))}
         </ScrollView>
@@ -74,9 +78,9 @@ const Home = () => {
 
       {/* Latest Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
-        {listings.slice(1).map((coin, i) => (
-          <View key={coin.id}>
-            <CoinCardLarge coin={coin} />
+        {currencies.data.slice(1).map((currency: Currency) => (
+          <View key={currency.id}>
+            <CoinCardLarge currency={currency} coin={coin.data} />
           </View>
         ))}
       </View>

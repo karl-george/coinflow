@@ -1,13 +1,18 @@
 import { Colors } from '@/constants/Colors';
-import { info } from '@/data/info';
-import { Currency } from '@/interfaces/crypto';
+import { Coin, Currency } from '@/interfaces/crypto';
 import { Link } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-const CoinCardLarge = ({ coin }: { coin: Currency }) => {
+const CoinCardLarge = ({
+  currency,
+  coin,
+}: {
+  currency: Currency;
+  coin: Coin;
+}) => {
   return (
-    <Link href={`/coin/${coin.id}`} key={coin.id} asChild>
+    <Link href={`/coin/${currency.id}`} key={currency.id} asChild>
       <View style={styles.cardLargeBG}>
         <View
           style={{
@@ -17,7 +22,7 @@ const CoinCardLarge = ({ coin }: { coin: Currency }) => {
           }}
         >
           <Image
-            source={{ uri: info?.[coin.id].logo }}
+            source={{ uri: coin?.[currency.id].logo }}
             style={{ width: 64, height: 64 }}
           />
           <View style={{ flexDirection: 'column' }}>
@@ -28,7 +33,7 @@ const CoinCardLarge = ({ coin }: { coin: Currency }) => {
                 color: Colors.text,
               }}
             >
-              {coin.symbol}
+              {currency.symbol}
             </Text>
             <Text
               style={{
@@ -36,7 +41,7 @@ const CoinCardLarge = ({ coin }: { coin: Currency }) => {
                 color: Colors.text_faded,
               }}
             >
-              {coin.name}
+              {currency.name}
             </Text>
           </View>
           <Text
@@ -45,7 +50,7 @@ const CoinCardLarge = ({ coin }: { coin: Currency }) => {
               color: Colors.accent,
             }}
           >
-            {coin.quote.EUR.price.toFixed(0)}€
+            {currency.quote.EUR.price.toFixed(0)}€
           </Text>
         </View>
       </View>
