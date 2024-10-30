@@ -1,7 +1,7 @@
 import Chart from '@/components/Chart';
 import { Colors } from '@/constants/Colors';
-import { info } from '@/data/info';
 import { Ionicons } from '@expo/vector-icons';
+import { useQuery } from '@tanstack/react-query';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -10,12 +10,18 @@ const Page = () => {
   const { id } = useLocalSearchParams();
   const router = useRouter();
 
+  const { data } = useQuery({
+    queryKey: ['info', id],
+    queryFn: () => fetch(`/api/info?id=${id}`).then((res) => res.json()),
+    enabled: !!id,
+  });
+
   return (
     <View style={styles.container}>
       {/* Header */}
       <Stack.Screen
         options={{
-          headerTitle: info?.[id].name,
+          headerTitle: data?.[id].name,
           headerTitleAlign: 'center',
           headerTitleStyle: { fontFamily: 'Montserrat_700Bold' },
           headerTintColor: Colors.text,
@@ -30,7 +36,7 @@ const Page = () => {
                 <Ionicons name='chevron-back' size={28} color={Colors.text} />
               </TouchableOpacity>
               <Image
-                source={{ uri: info?.[id].logo }}
+                source={{ uri: data?.[id].logo }}
                 style={{ width: 28, height: 28 }}
               />
             </View>
