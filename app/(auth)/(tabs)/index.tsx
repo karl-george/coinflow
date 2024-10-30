@@ -6,7 +6,7 @@ import { listings } from '@/data/listings';
 import { Currency } from '@/interfaces/crypto';
 import { useUser } from '@clerk/clerk-expo';
 import { Link } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useChartPressState } from 'victory-native';
@@ -15,18 +15,16 @@ const Home = () => {
   const { user } = useUser();
   const { top, bottom } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
+  const [listings, setListings] = useState<Currency[]>([]);
+
+  // const getListings = async () => {
+  //   const res = await fetch('/api/listings');
+  //   const data = await res.json();
+  //   setListings(data);
+  // };
 
   // useEffect(() => {
-  //   const getCoins = async () => {
-  //     try {
-  //       const res = await fetch('/api/listings');
-  //       const data = await res.json();
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getCoins();
+  //   getListings();
   // }, []);
 
   return (
