@@ -62,6 +62,7 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
               style={{
                 fontSize: 14,
                 color: Colors.accent,
+                alignSelf: 'flex-end',
               }}
             >
               {coin.item.data.price_change_percentage_24h.eur.toFixed(2)}%
