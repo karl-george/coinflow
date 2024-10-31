@@ -17,10 +17,10 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
           }}
         >
           {/* Image and name */}
-          <View style={{ flexDirection: 'row', gap: 14, alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
             <Image
               source={{ uri: coin.item.small }}
-              style={{ width: 64, height: 64 }}
+              style={{ width: 64, height: 64, borderRadius: 100 }}
             />
             <View style={{ flexDirection: 'column' }}>
               <Text
@@ -45,18 +45,28 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
 
           {/* Sparkline */}
           <View>
-            <SvgUri uri={coin.item.data.sparkline} width={64} height={64} />
+            <SvgUri uri={coin.item.data.sparkline} width={64} height={24} />
           </View>
 
           {/* Price */}
-          <Text
-            style={{
-              fontSize: 18,
-              color: Colors.accent,
-            }}
-          >
-            {coin.item.data.price.toFixed(0)}€
-          </Text>
+          <View style={{ flexDirection: 'column' }}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: Colors.text,
+              }}
+            >
+              €{coin.item.data.price.toFixed(2)}
+            </Text>
+            <Text
+              style={{
+                fontSize: 14,
+                color: Colors.accent,
+              }}
+            >
+              {coin.item.data.price_change_percentage_24h.eur.toFixed(2)}%
+            </Text>
+          </View>
         </View>
       </View>
     </Link>
