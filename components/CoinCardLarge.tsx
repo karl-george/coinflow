@@ -36,6 +36,7 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
                 style={{
                   fontSize: 16,
                   color: Colors.text_faded,
+                  maxWidth: 78,
                 }}
               >
                 {coin.item.name}
@@ -59,11 +60,14 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
               €{coin.item.data.price.toFixed(2)}
             </Text>
             <Text
-              style={{
-                fontSize: 14,
-                color: Colors.accent,
-                alignSelf: 'flex-end',
-              }}
+              style={[
+                { fontSize: 14, color: Colors.accent, alignSelf: 'flex-end' },
+                parseFloat(
+                  coin.item.data.price_change_percentage_24h.eur.toFixed(2)
+                ) < 0
+                  ? { color: '#D21F3C' }
+                  : { color: Colors.accent },
+              ]}
             >
               {coin.item.data.price_change_percentage_24h.eur.toFixed(2)}%
             </Text>
