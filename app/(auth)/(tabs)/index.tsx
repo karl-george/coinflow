@@ -2,7 +2,7 @@ import Chart from '@/components/Chart';
 import CoinCard from '@/components/CoinCard';
 import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
-import { Coin, Currency } from '@/interfaces/crypto';
+import { Coin } from '@/interfaces/crypto';
 import { useUser } from '@clerk/clerk-expo';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'expo-router';
@@ -22,7 +22,7 @@ const Home = () => {
   });
 
   // Sort the data by price
-  trending.data.coins.sort(
+  trending.data?.coins.sort(
     (a: Coin, b: Coin) => b.item.data.price - a.item.data.price
   );
 
