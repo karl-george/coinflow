@@ -2,7 +2,7 @@ import Chart from '@/components/Chart';
 import CoinCard from '@/components/CoinCard';
 import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
-import { Currency } from '@/interfaces/crypto';
+import { Coin, Currency } from '@/interfaces/crypto';
 import { useUser } from '@clerk/clerk-expo';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'expo-router';
@@ -16,20 +16,15 @@ const Home = () => {
   const { top, bottom } = useSafeAreaInsets();
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
 
-  const currencies = useQuery({
-    queryKey: ['currencies'],
-    queryFn: () => fetch('/api/listings').then((res) => res.json()),
+  const trending = useQuery({
+    queryKey: ['trending'],
+    queryFn: () => fetch(`/api/trending`).then((res) => res.json()),
   });
 
-  const ids = currencies.data
-    ?.map((currency: Currency) => currency.id)
-    .join(',');
-
-  const coin = useQuery({
-    queryKey: ['info', ids],
-    queryFn: () => fetch(`/api/info?ids=${ids}`).then((res) => res.json()),
-    enabled: !!ids,
-  });
+  // Sort the data by price
+  trending.data.coins.sort(
+    (a: Coin, b: Coin) => b.item.data.price - a.item.data.price
+  );
 
   return (
     <ScrollView style={[styles.container, { paddingTop: top + 42 }]}>
@@ -46,41 +41,22 @@ const Home = () => {
         </View>
       </View>
 
-      {/* Trending */}
-      <View style={{ marginTop: 48 }}>
-        <View style={styles.textRow}>
-          <Text style={styles.subtitle}>Trending Coins</Text>
-          <Text style={styles.seeMore}>See All</Text>
+      {/* Trending Chart */}
+      <View>
+        <View style={{ marginTop: 36 }}>
+          <View style={styles.textRow}>
+            <Text style={styles.subtitle}>Trending</Text>
+            <Text style={styles.seeMore}>See All</Text>
+          </View>
         </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 10 }}
-          style={styles.trendingRow}
-        >
-          {currencies.data?.map((currency: Currency) => (
-            <Link href={`/coin/${currency.id}`} key={currency.id}>
-              <CoinCard currency={currency} coin={coin.data} />
-            </Link>
-          ))}
-        </ScrollView>
+        {/* <Chart height={320} /> */}
       </View>
 
-      {/* Latest Chart */}
-      <View style={{ marginTop: 36 }}>
-        <View style={styles.textRow}>
-          <Text style={styles.subtitle}>Latest</Text>
-          <Text style={styles.seeMore}>See All</Text>
-        </View>
-      </View>
-
-      <Chart height={320} />
-
-      {/* Latest Coins */}
+      {/* Trending Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
-        {currencies.data.slice(1).map((currency: Currency) => (
-          <View key={currency.id}>
-            <CoinCardLarge currency={currency} coin={coin.data} />
+        {trending.data?.coins?.map((coin: Coin) => (
+          <View key={coin.item.coin_id}>
+            <CoinCardLarge coin={coin} />
           </View>
         ))}
       </View>
