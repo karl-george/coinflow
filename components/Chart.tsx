@@ -1,6 +1,6 @@
 import { Colors } from '@/constants/Colors';
-import { ticker } from '@/data/ticker';
 import { Circle, matchFont } from '@shopify/react-native-skia';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import React, { useEffect } from 'react';
 import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -47,6 +47,11 @@ const Chart = ({ height }: { height: number }) => {
       text: `${date.toLocaleDateString()}`,
       defaultValue: '',
     };
+  });
+
+  const { data: ticker } = useQuery({
+    queryKey: ['tickers'],
+    queryFn: () => fetch(`/api/tickers`).then((res) => res.json()),
   });
 
   return (
