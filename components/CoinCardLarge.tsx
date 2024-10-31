@@ -3,6 +3,7 @@ import { Coin } from '@/interfaces/crypto';
 import { Link } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { SvgUri } from 'react-native-svg';
 
 const CoinCardLarge = ({ coin }: { coin: Coin }) => {
   return (
@@ -15,29 +16,39 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
             alignItems: 'center',
           }}
         >
-          <Image
-            source={{ uri: coin.item.small }}
-            style={{ width: 64, height: 64 }}
-          />
-          <View style={{ flexDirection: 'column' }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'semibold',
-                color: Colors.text,
-              }}
-            >
-              {coin.item.symbol}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: Colors.text_faded,
-              }}
-            >
-              {coin.item.name}
-            </Text>
+          {/* Image and name */}
+          <View style={{ flexDirection: 'row', gap: 14, alignItems: 'center' }}>
+            <Image
+              source={{ uri: coin.item.small }}
+              style={{ width: 64, height: 64 }}
+            />
+            <View style={{ flexDirection: 'column' }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: 'semibold',
+                  color: Colors.text,
+                }}
+              >
+                {coin.item.symbol}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: Colors.text_faded,
+                }}
+              >
+                {coin.item.name}
+              </Text>
+            </View>
           </View>
+
+          {/* Sparkline */}
+          <View>
+            <SvgUri uri={coin.item.data.sparkline} width={64} height={64} />
+          </View>
+
+          {/* Price */}
           <Text
             style={{
               fontSize: 18,
