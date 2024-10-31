@@ -1,18 +1,17 @@
 import { Colors } from '@/constants/Colors';
-import { Coin, Currency } from '@/interfaces/crypto';
+import { Currency } from '@/interfaces/crypto';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 interface Props {
   currency: Currency;
-  coin: Coin;
 }
 
-const CoinCard = ({ currency, coin }: Props) => {
+const CoinCard = ({ currency }: Props) => {
   return (
     <View key={currency.id} style={styles.coinCard}>
       <Image
-        source={{ uri: coin?.[currency.id].logo }}
+        source={{ uri: currency.item.thumb }}
         style={{ width: 64, height: 64 }}
       />
     </View>

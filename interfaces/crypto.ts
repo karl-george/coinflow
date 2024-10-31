@@ -1,74 +1,145 @@
 export interface Currency {
+  coins: Coin[];
+  nfts: Nft[];
+  categories: Category[];
+}
+
+interface Category {
   id: number;
   name: string;
-  symbol: string;
+  market_cap_1h_change: number;
   slug: string;
-  num_market_pairs: number;
-  date_added: string;
-  tags: string[];
-  max_supply: null | number;
-  circulating_supply: number;
-  total_supply: number;
-  infinite_supply: boolean;
-  platform: Platform | null;
-  cmc_rank: number;
-  self_reported_circulating_supply: null;
-  self_reported_market_cap: null;
-  tvl_ratio: null;
-  last_updated: string;
-  quote: Quote;
+  coins_count: number;
+  data: Data3;
 }
 
-interface Quote {
-  EUR: EUR;
-}
-
-interface EUR {
-  price: number;
-  volume_24h: number;
-  volume_change_24h: number;
-  percent_change_1h: number;
-  percent_change_24h: number;
-  percent_change_7d: number;
-  percent_change_30d: number;
-  percent_change_60d: number;
-  percent_change_90d: number;
+interface Data3 {
   market_cap: number;
-  market_cap_dominance: number;
-  fully_diluted_market_cap: number;
-  tvl: null;
-  last_updated: string;
+  market_cap_btc: number;
+  total_volume: number;
+  total_volume_btc: number;
+  market_cap_change_percentage_24h: Pricechangepercentage24h;
+  sparkline: string;
 }
 
-interface Platform {
-  id: number;
+interface Nft {
+  id: string;
   name: string;
   symbol: string;
-  slug: string;
-  token_address: string;
+  thumb: string;
+  nft_contract_id: number;
+  native_currency_symbol: string;
+  floor_price_in_native_currency: number;
+  floor_price_24h_percentage_change: number;
+  data: Data2;
+}
+
+interface Data2 {
+  floor_price: string;
+  floor_price_in_usd_24h_percentage_change: string;
+  h24_volume: string;
+  h24_average_sale_price: string;
+  sparkline: string;
+  content: Content | null;
 }
 
 export interface Coin {
+  item: Item;
+}
+
+interface Item {
+  id: string;
+  coin_id: number;
   name: string;
   symbol: string;
-  category: string;
-  description: string;
+  market_cap_rank: number;
+  thumb: string;
+  small: string;
+  large: string;
   slug: string;
-  logo: string;
-  subreddit: string;
-  notice: string;
-  tags: string[];
-  'tag-names': string[];
-  'tag-groups': string[];
-  urls: string;
-  platform: null;
-  date_added: string;
-  twitter_username: string;
-  is_hidden: number;
-  date_launched: string;
-  contract_address: string[];
-  self_reported_circulating_supply: null;
-  self_reported_tags: null;
-  self_reported_market_cap: null;
-  infinite_supply: boolean;
+  price_btc: number;
+  score: number;
+  data: Data;
+}
+
+interface Data {
+  price: number;
+  price_btc: string;
+  price_change_percentage_24h: Pricechangepercentage24h;
+  market_cap: string;
+  market_cap_btc: string;
+  total_volume: string;
+  total_volume_btc: string;
+  sparkline: string;
+  content: Content | null;
+}
+
+interface Content {
+  title: string;
+  description: string;
+}
+
+interface Pricechangepercentage24h {
+  aed: number;
+  ars: number;
+  aud: number;
+  bch: number;
+  bdt: number;
+  bhd: number;
+  bmd: number;
+  bnb: number;
+  brl: number;
+  btc: number;
+  cad: number;
+  chf: number;
+  clp: number;
+  cny: number;
+  czk: number;
+  dkk: number;
+  dot: number;
+  eos: number;
+  eth: number;
+  eur: number;
+  gbp: number;
+  gel: number;
+  hkd: number;
+  huf: number;
+  idr: number;
+  ils: number;
+  inr: number;
+  jpy: number;
+  krw: number;
+  kwd: number;
+  lkr: number;
+  ltc: number;
+  mmk: number;
+  mxn: number;
+  myr: number;
+  ngn: number;
+  nok: number;
+  nzd: number;
+  php: number;
+  pkr: number;
+  pln: number;
+  rub: number;
+  sar: number;
+  sek: number;
+  sgd: number;
+  thb: number;
+  try: number;
+  twd: number;
+  uah: number;
+  usd: number;
+  vef: number;
+  vnd: number;
+  xag: number;
+  xau: number;
+  xdr: number;
+  xlm: number;
+  xrp: number;
+  yfi: number;
+  zar: number;
+  bits: number;
+  link: number;
+  sats: number;
 }
