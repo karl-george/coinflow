@@ -1,5 +1,6 @@
 import Chart from '@/components/Chart';
 import { Colors } from '@/constants/Colors';
+import { shortenNumber } from '@/utils/shortenNumber';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
@@ -21,7 +22,7 @@ const Page = () => {
       {/* Header */}
       <Stack.Screen
         options={{
-          headerTitle: data?.[id].name,
+          headerTitle: data?.name,
           headerTitleAlign: 'center',
           headerTitleStyle: { fontFamily: 'Montserrat_700Bold' },
           headerTintColor: Colors.text,
@@ -36,7 +37,7 @@ const Page = () => {
                 <Ionicons name='chevron-back' size={28} color={Colors.text} />
               </TouchableOpacity>
               <Image
-                source={{ uri: data?.[id].logo }}
+                source={{ uri: data?.image.small }}
                 style={{ width: 28, height: 28 }}
               />
             </View>
@@ -64,22 +65,30 @@ const Page = () => {
       <View style={styles.infoContainer}>
         <View style={styles.infoCard}>
           <View style={styles.textInfoRow}>
-            <Text style={styles.textInfo}>Open</Text>
-            <Text style={styles.textInfo}>123456</Text>
+            <Text style={styles.textInfo}>Price</Text>
+            <Text style={styles.textInfo}>
+              €{data?.market_data.current_price.eur}
+            </Text>
           </View>
           <View style={styles.textInfoRow}>
-            <Text style={styles.textInfo}>Close</Text>
-            <Text style={styles.textInfo}>123456</Text>
+            <Text style={styles.textInfo}>Cap</Text>
+            <Text style={styles.textInfo}>
+              €{data && shortenNumber(data?.market_data.market_cap.eur)}
+            </Text>
           </View>
         </View>
         <View style={styles.infoCard}>
           <View style={styles.textInfoRow}>
             <Text style={styles.textInfo}>High</Text>
-            <Text style={styles.textInfo}>123456</Text>
+            <Text style={styles.textInfo}>
+              €{data?.market_data.high_24h.eur}
+            </Text>
           </View>
           <View style={styles.textInfoRow}>
             <Text style={styles.textInfo}>Low</Text>
-            <Text style={styles.textInfo}>123456</Text>
+            <Text style={styles.textInfo}>
+              €{data?.market_data.low_24h.eur}
+            </Text>
           </View>
         </View>
       </View>
@@ -87,19 +96,41 @@ const Page = () => {
       <View style={{ marginTop: 24, gap: 16 }}>
         <View style={styles.textInfoRow}>
           <Text style={styles.textInfo}>Daily Change</Text>
-          <Text style={[styles.textInfo, { color: Colors.accent }]}>5.09%</Text>
+          <Text
+            style={[
+              styles.textInfo,
+              parseFloat(
+                data?.market_data.price_change_percentage_24h.toFixed(2)
+              ) < 0
+                ? { color: '#D21F3C' }
+                : { color: Colors.accent },
+            ]}
+          >
+            {data?.market_data.price_change_percentage_24h.toFixed(2)}%
+          </Text>
         </View>
         <View style={styles.textInfoRow}>
-          <Text style={styles.textInfo}>Market Capital</Text>
-          <Text style={[styles.textInfo]}>$5325252</Text>
+          <Text style={styles.textInfo}>Monthly Change</Text>
+          <Text
+            style={[
+              styles.textInfo,
+              parseFloat(
+                data?.market_data.price_change_percentage_30d.toFixed(2)
+              ) < 0
+                ? { color: '#D21F3C' }
+                : { color: Colors.accent },
+            ]}
+          >
+            {data?.market_data.price_change_percentage_30d.toFixed(2)}%
+          </Text>
         </View>
         <View style={styles.textInfoRow}>
-          <Text style={styles.textInfo}>3M Drawdown</Text>
-          <Text style={[styles.textInfo, { color: 'red' }]}>-12</Text>
+          <Text style={styles.textInfo}>All Time High</Text>
+          <Text style={[styles.textInfo]}>€{data?.market_data.ath.eur}</Text>
         </View>
         <View style={styles.textInfoRow}>
-          <Text style={styles.textInfo}>Enterprise Value</Text>
-          <Text style={[styles.textInfo]}>$5544</Text>
+          <Text style={styles.textInfo}>All Time Low</Text>
+          <Text style={[styles.textInfo]}>€{data?.market_data.atl.eur}</Text>
         </View>
       </View>
     </View>
