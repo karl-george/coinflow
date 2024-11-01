@@ -7,7 +7,14 @@ import { useUser } from '@clerk/clerk-expo';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'expo-router';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useChartPressState } from 'victory-native';
 
@@ -55,9 +62,15 @@ const Home = () => {
       {/* Trending Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
         {trending.data?.coins?.map((coin: Coin) => (
-          <View key={coin.item.coin_id}>
-            <CoinCardLarge coin={coin} />
-          </View>
+          <Link
+            href={`/coin/${coin.item.coin_id}`}
+            key={coin.item.coin_id}
+            asChild
+          >
+            <Pressable>
+              <CoinCardLarge coin={coin} />
+            </Pressable>
+          </Link>
         ))}
       </View>
     </ScrollView>
