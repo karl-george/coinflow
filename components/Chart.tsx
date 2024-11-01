@@ -2,7 +2,7 @@ import { Colors } from '@/constants/Colors';
 import { Circle, matchFont } from '@shopify/react-native-skia';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, {
   SharedValue,
@@ -51,8 +51,11 @@ const Chart = ({ height }: { height: number }) => {
 
   const { data: ticker } = useQuery({
     queryKey: ['tickers'],
-    queryFn: () => fetch(`/api/tickers`).then((res) => res.json()),
+    queryFn: async (): Promise<any[]> =>
+      fetch(`/api/tickers`).then((res) => res.json()),
   });
+
+  console.log(ticker);
 
   return (
     <View style={[styles.chart, { height }]}>
