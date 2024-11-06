@@ -7,7 +7,7 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Search = () => {
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const [searchTerm, setSearchTerm] = useState('');
 
   const { data } = useQuery({
@@ -17,7 +17,7 @@ const Search = () => {
   });
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { marginBottom: bottom + 48 }]}>
       {/* Search Input */}
       <View style={[{ marginTop: top + 42 }, styles.inputContainer]}>
         <Ionicons name='search' size={24} color={Colors.text_faded} />
