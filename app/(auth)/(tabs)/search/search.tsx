@@ -1,5 +1,7 @@
+import CoinCardSmall from '@/components/CoinCardSmall';
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -7,6 +9,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const Search = () => {
   const { top } = useSafeAreaInsets();
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { data } = useQuery({
+    queryKey: ['search', searchTerm],
+    queryFn: () =>
+      fetch(`/api/search?q=${searchTerm}`).then((res) => res.json()),
+  });
 
   return (
     <View style={styles.container}>
@@ -24,6 +32,12 @@ const Search = () => {
       {/* Search Title */}
       <View>
         <Text style={styles.searchTitle}>{searchTerm}</Text>
+      </View>
+      {/* Coin Thumbs */}
+      <View style={styles.coinRow}>
+        {data?.coins.map((coin) => (
+          <CoinCardSmall coin={coin} key={coin.id} />
+        ))}
       </View>
     </View>
   );
@@ -58,5 +72,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.text,
     fontFamily: 'Montserrat_600SemiBold',
+  },
+  coinRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 12,
   },
 });
