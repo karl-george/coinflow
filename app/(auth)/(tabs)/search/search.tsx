@@ -3,7 +3,7 @@ import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Search = () => {
@@ -17,7 +17,7 @@ const Search = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Search Input */}
       <View style={[{ marginTop: top + 42 }, styles.inputContainer]}>
         <Ionicons name='search' size={24} color={Colors.text_faded} />
@@ -39,7 +39,7 @@ const Search = () => {
           <CoinCardSmall coin={coin} key={coin.id} />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
