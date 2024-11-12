@@ -1,10 +1,18 @@
 import CoinCardSmall from '@/components/CoinCardSmall';
 import { Colors } from '@/constants/Colors';
 import { useStore } from '@/store/savedStore';
-import { useUser } from '@clerk/clerk-expo';
+import { useAuth, useUser } from '@clerk/clerk-expo';
+import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Profile = () => {
@@ -22,6 +30,8 @@ const Profile = () => {
     enabled: !!ids,
   });
 
+  const { signOut } = useAuth();
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ marginTop: top + 42 }}>
@@ -31,10 +41,18 @@ const Profile = () => {
             resizeMode='contain'
             style={{ width: 120, height: 120, borderRadius: 100 }}
           />
-          <View>
+          <View style={{ alignItems: 'center' }}>
             <Text style={styles.name}>
               {user?.firstName} {user?.lastName}
             </Text>
+            <TouchableOpacity onPress={() => signOut()}>
+              <Ionicons
+                name='log-out-outline'
+                size={28}
+                color={Colors.accent}
+                style={{ marginTop: 8 }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ marginTop: 28 }}>
