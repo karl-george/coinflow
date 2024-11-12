@@ -73,7 +73,7 @@ const Chart = ({
             >
               {name}{' '}
               <Text style={{ color: Colors.accent, fontSize: 24 }}>
-                {symbol.toUpperCase()}
+                {symbol?.toUpperCase()}
               </Text>
             </Text>
             {!isActive && (
