@@ -36,7 +36,12 @@ const Search = () => {
       {/* Coin Thumbs */}
       <View style={styles.coinRow}>
         {data?.coins.map((coin) => (
-          <CoinCardSmall coin={coin} key={coin.id} />
+          <CoinCardSmall
+            key={coin.id}
+            image={coin.large}
+            name={coin.name}
+            id={coin.id}
+          />
         ))}
       </View>
     </ScrollView>
