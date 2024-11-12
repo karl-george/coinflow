@@ -67,7 +67,7 @@ const Page = () => {
       />
       {/* Chart */}
       <View style={{ marginTop: 16 }}>
-        <Chart height={460} />
+        <Chart height={460} name={data?.name} symbol={data?.symbol} />
       </View>
       {/* Info Card */}
       <View style={styles.infoContainer}>
