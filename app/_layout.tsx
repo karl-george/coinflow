@@ -1,5 +1,5 @@
 import { tokenCache } from '@/utils/cache';
-import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
+import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -7,7 +7,7 @@ import {
   Montserrat_700Bold,
 } from '@expo-google-fonts/montserrat';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -29,6 +29,9 @@ const InitialLayout = () => {
     Montserrat_700Bold,
   });
 
+  const { isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
+
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
@@ -38,6 +41,16 @@ const InitialLayout = () => {
   if (!fontsLoaded) {
     return null;
   }
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    if (isSignedIn) {
+      router.replace('/(auth)/(tabs)');
+    } else if (!isSignedIn) {
+      router.replace('/');
+    }
+  }, [isSignedIn]);
 
   return (
     <Stack>
