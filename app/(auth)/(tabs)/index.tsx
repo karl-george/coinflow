@@ -44,7 +44,9 @@ const Home = () => {
           style={{ width: 70, height: 70, borderRadius: 100 }}
         />
         <View>
-          <Text style={styles.name}>{user?.firstName}</Text>
+          <Text style={styles.name}>
+            {user?.firstName} {user?.lastName}
+          </Text>
         </View>
       </View>
 
@@ -56,12 +58,20 @@ const Home = () => {
             <Text style={styles.seeMore}>See All</Text>
           </View>
         </View>
-        {/* <Chart height={320} /> */}
+        <Link href={`/coin/${trending.data?.coins[0].item.coin_id}`} asChild>
+          <Pressable>
+            <Chart
+              height={320}
+              name={trending.data?.coins[0].item.name}
+              symbol={trending.data?.coins[0].item.symbol}
+            />
+          </Pressable>
+        </Link>
       </View>
 
       {/* Trending Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
-        {trending.data?.coins?.map((coin: Coin) => (
+        {trending.data?.coins?.slice(1, 10).map((coin: Coin) => (
           <Link
             href={`/coin/${coin.item.coin_id}`}
             key={coin.item.coin_id}
