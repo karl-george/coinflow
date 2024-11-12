@@ -1,6 +1,5 @@
 import { Colors } from '@/constants/Colors';
 import { Coin } from '@/interfaces/crypto';
-import { Link } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
