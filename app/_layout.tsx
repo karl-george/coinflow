@@ -45,6 +45,7 @@ const InitialLayout = () => {
       <Stack.Screen name='signin' options={{ headerShown: false }} />
       <Stack.Screen name='signup' options={{ headerShown: false }} />
       <Stack.Screen name='(auth)/(tabs)' options={{ headerShown: false }} />
+      <Stack.Screen name='(auth)/trending' />
     </Stack>
   );
 };
