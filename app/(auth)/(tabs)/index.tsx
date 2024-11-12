@@ -1,5 +1,4 @@
 import Chart from '@/components/Chart';
-import CoinCard from '@/components/CoinCard';
 import CoinCardLarge from '@/components/CoinCardLarge';
 import { Colors } from '@/constants/Colors';
 import { Coin } from '@/interfaces/crypto';
@@ -16,12 +15,10 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useChartPressState } from 'victory-native';
 
 const Home = () => {
   const { user } = useUser();
   const { top, bottom } = useSafeAreaInsets();
-  const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
 
   const trending = useQuery({
     queryKey: ['trending'],
@@ -55,7 +52,9 @@ const Home = () => {
         <View style={{ marginTop: 36 }}>
           <View style={styles.textRow}>
             <Text style={styles.subtitle}>Trending</Text>
-            <Text style={styles.seeMore}>See All</Text>
+            <Link href={`/(auth)/trending`} asChild>
+              <Text style={styles.seeMore}>See All</Text>
+            </Link>
           </View>
         </View>
         <Link href={`/coin/${trending.data?.coins[0].item.coin_id}`} asChild>
