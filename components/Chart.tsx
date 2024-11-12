@@ -1,26 +1,16 @@
-import { Colors } from '@/constants/Colors';
-import { Circle, matchFont } from '@shopify/react-native-skia';
-import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
-import React from 'react';
 import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { CartesianChart, Line, useChartPressState } from 'victory-native';
+import { Circle, matchFont } from '@shopify/react-native-skia';
+import { Colors } from '@/constants/Colors';
+import { format } from 'date-fns';
 import Animated, {
   SharedValue,
   useAnimatedProps,
 } from 'react-native-reanimated';
-import { CartesianChart, Line, useChartPressState } from 'victory-native';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
-
-const ToolTip = ({
-  x,
-  y,
-}: {
-  x: SharedValue<number>;
-  y: SharedValue<number>;
-}) => {
-  return <Circle cx={x} cy={y} r={8} color={Colors.accent} />;
-};
 
 const Chart = ({ height }: { height: number }) => {
   const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
@@ -33,6 +23,12 @@ const Chart = ({ height }: { height: number }) => {
   const font = matchFont(fontStyle);
 
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
+
+  const { data: tickers } = useQuery({
+    queryKey: ['tickers'],
+    queryFn: async (): Promise<any[]> =>
+      fetch(`/api/tickers`).then((res) => res.json()),
+  });
 
   const animatedText = useAnimatedProps(() => {
     return {
@@ -49,17 +45,19 @@ const Chart = ({ height }: { height: number }) => {
     };
   });
 
-  const { data: ticker } = useQuery({
-    queryKey: ['tickers'],
-    queryFn: async (): Promise<any[]> =>
-      fetch(`/api/tickers`).then((res) => res.json()),
-  });
-
-  console.log(ticker);
+  const ToolTip = ({
+    x,
+    y,
+  }: {
+    x: SharedValue<number>;
+    y: SharedValue<number>;
+  }) => {
+    return <Circle cx={x} cy={y} r={8} color={Colors.accent} />;
+  };
 
   return (
     <View style={[styles.chart, { height }]}>
-      {ticker && (
+      {tickers && (
         <View style={{ marginBottom: 16 }}>
           <Text
             style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
@@ -72,7 +70,7 @@ const Chart = ({ height }: { height: number }) => {
               <Text
                 style={{ fontSize: 22, fontWeight: 'bold', color: Colors.text }}
               >
-                {ticker[ticker.length - 1].price.toFixed(2)} €
+                {tickers[tickers.length - 1].price.toFixed(2)} €
               </Text>
               <Text style={{ fontSize: 18, color: Colors.text }}>Today</Text>
             </View>
@@ -105,7 +103,7 @@ const Chart = ({ height }: { height: number }) => {
           formatYLabel: (v) => `${v} €`,
           formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
         }}
-        data={ticker!}
+        data={tickers!}
         xKey='timestamp'
         yKeys={['price']}
       >
