@@ -18,7 +18,7 @@ const Page = () => {
     enabled: !!id,
   });
 
-  const toggleSave = useStore((state: any) => state.toggleSave);
+  const toggleSaveCoin = useStore((state: any) => state.toggleSaveCoin);
   const savedCoins = useStore((state: any) => state.savedCoins);
 
   return (
@@ -50,12 +50,16 @@ const Page = () => {
             <View
               style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}
             >
-              <TouchableOpacity onPress={() => toggleSave(data?.id)}>
-                <Ionicons
-                  name='bookmark-outline'
-                  size={28}
-                  color={Colors.text_faded}
-                />
+              <TouchableOpacity onPress={() => toggleSaveCoin(data?.id)}>
+                {savedCoins.includes(data?.id) ? (
+                  <Ionicons
+                    name='bookmark-outline'
+                    size={28}
+                    color={Colors.text_faded}
+                  />
+                ) : (
+                  <Ionicons name='bookmark' size={28} color={Colors.text} />
+                )}
               </TouchableOpacity>
             </View>
           ),
