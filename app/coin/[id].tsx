@@ -1,5 +1,6 @@
 import Chart from '@/components/Chart';
 import { Colors } from '@/constants/Colors';
+import { useStore } from '@/store/savedStore';
 import { shortenNumber } from '@/utils/shortenNumber';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
@@ -16,6 +17,9 @@ const Page = () => {
     queryFn: () => fetch(`/api/info?id=${id}`).then((res) => res.json()),
     enabled: !!id,
   });
+
+  const toggleSave = useStore((state: any) => state.toggleSave);
+  const savedCoins = useStore((state: any) => state.savedCoins);
 
   return (
     <View style={styles.container}>
@@ -46,7 +50,7 @@ const Page = () => {
             <View
               style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}
             >
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => toggleSave(data?.id)}>
                 <Ionicons
                   name='bookmark-outline'
                   size={28}
@@ -58,9 +62,7 @@ const Page = () => {
         }}
       />
       {/* Chart */}
-      <View style={{ marginTop: 16 }}>
-        <Chart height={460} />
-      </View>
+      <View style={{ marginTop: 16 }}>{/* <Chart height={460} /> */}</View>
       {/* Info Card */}
       <View style={styles.infoContainer}>
         <View style={styles.infoCard}>
