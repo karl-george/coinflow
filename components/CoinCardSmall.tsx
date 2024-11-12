@@ -4,27 +4,21 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 type Props = {
-  coin: {
-    id: string;
-    name: string;
-    api_symbol: string;
-    symbol: string;
-    market_cap_rank: number;
-    thumb: string;
-    large: string;
-  };
+  id: string;
+  image: string;
+  name: string;
 };
 
-const CoinCardSmall = ({ coin }: Props) => {
+const CoinCardSmall = ({ image, name, id }: Props) => {
   return (
-    <Link href={`/coin/${coin.id}`}>
+    <Link href={`/coin/${id}`}>
       <View style={styles.coinCardSmall}>
         <Image
-          source={{ uri: coin.thumb }}
+          source={{ uri: image }}
           style={{ width: 64, height: 64, borderRadius: 100 }}
         />
         <Text style={styles.coinCardText} numberOfLines={2}>
-          {coin.name}
+          {name}
         </Text>
       </View>
     </Link>
