@@ -12,7 +12,15 @@ import Animated, {
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
-const Chart = ({ height }: { height: number }) => {
+const Chart = ({
+  height,
+  name,
+  symbol,
+}: {
+  height: number;
+  name: string;
+  symbol: string;
+}) => {
   const fontFamily = Platform.select({ ios: 'Helvetica', default: 'serif' });
   const fontStyle = {
     fontFamily,
@@ -58,64 +66,81 @@ const Chart = ({ height }: { height: number }) => {
   return (
     <View style={[styles.chart, { height }]}>
       {tickers && (
-        <View style={{ marginBottom: 16 }}>
-          <Text
-            style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
-          >
-            Bitcoin{' '}
-            <Text style={{ color: Colors.accent, fontSize: 24 }}>BTC</Text>
-          </Text>
-          {!isActive && (
-            <View style={{ marginVertical: 8, gap: 8 }}>
-              <Text
-                style={{ fontSize: 22, fontWeight: 'bold', color: Colors.text }}
-              >
-                {tickers[tickers.length - 1].price.toFixed(2)} €
+        <>
+          <View style={{ marginBottom: 16 }}>
+            <Text
+              style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
+            >
+              {name}{' '}
+              <Text style={{ color: Colors.accent, fontSize: 24 }}>
+                {symbol.toUpperCase()}
               </Text>
-              <Text style={{ fontSize: 18, color: Colors.text }}>Today</Text>
-            </View>
-          )}
-          {isActive && (
-            <View style={{ marginVertical: 8, gap: 8 }}>
-              <AnimatedTextInput
-                editable={false}
-                underlineColorAndroid={'transparent'}
-                style={{ fontSize: 22, fontWeight: 'bold', color: Colors.text }}
-                animatedProps={animatedText}
-              ></AnimatedTextInput>
-              <AnimatedTextInput
-                editable={false}
-                underlineColorAndroid={'transparent'}
-                style={{ fontSize: 18, color: Colors.text }}
-                animatedProps={animatedDateText}
-              ></AnimatedTextInput>
-            </View>
-          )}
-        </View>
-      )}
-      <CartesianChart
-        chartPressState={state}
-        axisOptions={{
-          font,
-          tickCount: 5,
-          labelOffset: { x: -2, y: 0 },
-          labelColor: Colors.text,
-          formatYLabel: (v) => `${v} €`,
-          formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
-        }}
-        data={tickers!}
-        xKey='timestamp'
-        yKeys={['price']}
-      >
-        {({ points }) => (
-          <>
-            <Line points={points.price} color={Colors.accent} strokeWidth={3} />
-            {isActive && (
-              <ToolTip x={state.x.position} y={state.y.price.position} />
+            </Text>
+            {!isActive && (
+              <View style={{ marginVertical: 8, gap: 8 }}>
+                <Text
+                  style={{
+                    fontSize: 22,
+                    fontWeight: 'bold',
+                    color: Colors.text,
+                  }}
+                >
+                  {tickers[tickers.length - 1].price.toFixed(2)} €
+                </Text>
+                <Text style={{ fontSize: 18, color: Colors.text }}>Today</Text>
+              </View>
             )}
-          </>
-        )}
-      </CartesianChart>
+            {isActive && (
+              <View style={{ marginVertical: 8, gap: 8 }}>
+                <AnimatedTextInput
+                  editable={false}
+                  underlineColorAndroid={'transparent'}
+                  style={{
+                    fontSize: 22,
+                    fontWeight: 'bold',
+                    color: Colors.text,
+                  }}
+                  animatedProps={animatedText}
+                ></AnimatedTextInput>
+                <AnimatedTextInput
+                  editable={false}
+                  underlineColorAndroid={'transparent'}
+                  style={{ fontSize: 18, color: Colors.text }}
+                  animatedProps={animatedDateText}
+                ></AnimatedTextInput>
+              </View>
+            )}
+          </View>
+
+          <CartesianChart
+            chartPressState={state}
+            axisOptions={{
+              font,
+              tickCount: 5,
+              labelOffset: { x: -2, y: 0 },
+              labelColor: Colors.text,
+              formatYLabel: (v) => `${v} €`,
+              formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
+            }}
+            data={tickers!}
+            xKey='timestamp'
+            yKeys={['price']}
+          >
+            {({ points }) => (
+              <>
+                <Line
+                  points={points.price}
+                  color={Colors.accent}
+                  strokeWidth={3}
+                />
+                {isActive && (
+                  <ToolTip x={state.x.position} y={state.y.price.position} />
+                )}
+              </>
+            )}
+          </CartesianChart>
+        </>
+      )}
     </View>
   );
 };
