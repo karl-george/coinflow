@@ -11,9 +11,6 @@ const Index = () => {
         <Link href='/signin'>
           <Text>Sign In</Text>
         </Link>
-        <Link href='/signup'>
-          <Text>Sign Up</Text>
-        </Link>
       </SignedOut>
     </View>
   );
@@ -25,6 +22,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.background,
     flex: 1,
+    paddingHorizontal: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
