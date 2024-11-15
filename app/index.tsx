@@ -6,14 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const Index = () => {
   return (
-    <View
-      style={{
-        backgroundColor: Colors.background,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.container}>
       <SignedOut>
         <Link href='/signin'>
           <Text>Sign In</Text>
@@ -28,4 +21,11 @@ const Index = () => {
 
 export default Index;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.background,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
