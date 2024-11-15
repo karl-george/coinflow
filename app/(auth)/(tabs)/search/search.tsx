@@ -3,24 +3,38 @@ import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Search = () => {
   const { top, bottom } = useSafeAreaInsets();
   const [searchTerm, setSearchTerm] = useState('');
+  const [query, setQuery] = useState('');
 
   const { data } = useQuery({
-    queryKey: ['search', searchTerm],
+    queryKey: ['search', query],
     queryFn: () =>
-      fetch(`/api/search?q=${searchTerm}`).then((res) => res.json()),
+      fetch(`/api/search?query=${query}`).then((res) => res.json()),
   });
 
   return (
     <ScrollView style={[styles.container, { marginBottom: bottom + 48 }]}>
       {/* Search Input */}
       <View style={[{ marginTop: top + 42 }, styles.inputContainer]}>
-        <Ionicons name='search' size={24} color={Colors.text_faded} />
+        <TouchableOpacity
+          onPress={() => {
+            setQuery(searchTerm);
+          }}
+        >
+          <Ionicons name='search' size={24} color={Colors.text_faded} />
+        </TouchableOpacity>
         <TextInput
           placeholder='Search for coins...'
           placeholderTextColor={Colors.text_faded}
@@ -31,7 +45,9 @@ const Search = () => {
       </View>
       {/* Search Title */}
       <View>
-        <Text style={styles.searchTitle}>{searchTerm}</Text>
+        <Text style={[styles.searchTitle, { marginBottom: 18, marginTop: 22 }]}>
+          Search results for: {query}
+        </Text>
       </View>
       {/* Coin Thumbs */}
       <View style={styles.coinRow}>
