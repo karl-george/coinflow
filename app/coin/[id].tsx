@@ -14,7 +14,7 @@ const Page = () => {
 
   const { data } = useQuery({
     queryKey: ['info', id],
-    queryFn: () => fetch(`/api/info?id=${id}`).then((res) => res.json()),
+    queryFn: () => fetch(`/api/info?ids=${id}`).then((res) => res.json()),
     enabled: !!id,
   });
 
@@ -75,13 +75,13 @@ const Page = () => {
           <View style={styles.textInfoRow}>
             <Text style={styles.textInfo}>Price</Text>
             <Text style={styles.textInfo}>
-              €{data?.market_data.current_price.eur}
+              €{data?.market_data?.current_price.eur}
             </Text>
           </View>
           <View style={styles.textInfoRow}>
             <Text style={styles.textInfo}>Cap</Text>
             <Text style={styles.textInfo}>
-              €{data && shortenNumber(data?.market_data.market_cap.eur)}
+              €{data && shortenNumber(data?.market_data?.market_cap.eur)}
             </Text>
           </View>
         </View>
@@ -89,13 +89,13 @@ const Page = () => {
           <View style={styles.textInfoRow}>
             <Text style={styles.textInfo}>High</Text>
             <Text style={styles.textInfo}>
-              €{data?.market_data.high_24h.eur}
+              €{data?.market_data?.high_24h.eur}
             </Text>
           </View>
           <View style={styles.textInfoRow}>
             <Text style={styles.textInfo}>Low</Text>
             <Text style={styles.textInfo}>
-              €{data?.market_data.low_24h.eur}
+              €{data?.market_data?.low_24h.eur}
             </Text>
           </View>
         </View>
@@ -108,13 +108,13 @@ const Page = () => {
             style={[
               styles.textInfo,
               parseFloat(
-                data?.market_data.price_change_percentage_24h.toFixed(2)
+                data?.market_data?.price_change_percentage_24h.toFixed(2)
               ) < 0
                 ? { color: '#D21F3C' }
                 : { color: Colors.accent },
             ]}
           >
-            {data?.market_data.price_change_percentage_24h.toFixed(2)}%
+            {data?.market_data?.price_change_percentage_24h.toFixed(2)}%
           </Text>
         </View>
         <View style={styles.textInfoRow}>
@@ -123,22 +123,22 @@ const Page = () => {
             style={[
               styles.textInfo,
               parseFloat(
-                data?.market_data.price_change_percentage_30d.toFixed(2)
+                data?.market_data?.price_change_percentage_30d.toFixed(2)
               ) < 0
                 ? { color: '#D21F3C' }
                 : { color: Colors.accent },
             ]}
           >
-            {data?.market_data.price_change_percentage_30d.toFixed(2)}%
+            {data?.market_data?.price_change_percentage_30d.toFixed(2)}%
           </Text>
         </View>
         <View style={styles.textInfoRow}>
           <Text style={styles.textInfo}>All Time High</Text>
-          <Text style={[styles.textInfo]}>€{data?.market_data.ath.eur}</Text>
+          <Text style={[styles.textInfo]}>€{data?.market_data?.ath.eur}</Text>
         </View>
         <View style={styles.textInfoRow}>
           <Text style={styles.textInfo}>All Time Low</Text>
-          <Text style={[styles.textInfo]}>€{data?.market_data.atl.eur}</Text>
+          <Text style={[styles.textInfo]}>€{data?.market_data?.atl.eur}</Text>
         </View>
       </View>
     </View>
