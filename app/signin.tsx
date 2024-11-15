@@ -1,8 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
-import { useRouter } from 'expo-router';
+import { Colors } from '@/constants/Colors';
 import { useAuth, useOAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 enum Strategy {
   Google = 'oauth_google',
@@ -39,25 +41,69 @@ const Page = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={() => onSelectAuth(Strategy.Google)}>
-        <Ionicons name='logo-google' size={24} />
-        <Text>Continue with Google</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <LinearGradient
+        colors={['#FFC0CB', '#FF69B4', '#FF1493']}
+        style={styles.gradient}
+      >
+        <View style={{ gap: 16 }}>
+          <TouchableOpacity
+            onPress={() => onSelectAuth(Strategy.Google)}
+            style={styles.button}
+          >
+            <Ionicons name='logo-google' size={24} />
+            <Text style={styles.buttonText}>Continue with Google</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => onSelectAuth(Strategy.Github)}>
-        <Ionicons name='logo-github' size={24} />
-        <Text>Continue with Github</Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onSelectAuth(Strategy.Github)}
+            style={styles.button}
+          >
+            <Ionicons name='logo-github' size={24} />
+            <Text style={styles.buttonText}>Continue with Github</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => signOut()}>
-        <Ionicons name='logo-github' size={24} />
-        <Text>Sign out</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Text style={styles.backText}>Go back</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </View>
   );
 };
 
 export default Page;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.background,
+    flex: 1,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
+  },
+  button: {
+    backgroundColor: Colors.accent,
+    padding: 16,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  buttonText: {
+    fontFamily: 'Montserrat_600SemiBold',
+  },
+  backText: {
+    color: Colors.accent,
+    fontFamily: 'Montserrat_400Regular',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+});
