@@ -57,7 +57,7 @@ const Home = () => {
             </Link>
           </View>
         </View>
-        <Link href={`/coin/${trending.data?.coins[0].item.coin_id}`} asChild>
+        <Link href={`/coin/${trending.data?.coins[0].item.id}`} asChild>
           <Pressable>
             <Chart
               height={320}
@@ -71,11 +71,7 @@ const Home = () => {
       {/* Trending Coins */}
       <View style={{ marginTop: 16, marginBottom: 128 }}>
         {trending.data?.coins?.slice(1, 10).map((coin: Coin) => (
-          <Link
-            href={`/coin/${coin.item.coin_id}`}
-            key={coin.item.coin_id}
-            asChild
-          >
+          <Link href={`/coin/${coin.item.id}`} key={coin.item.coin_id} asChild>
             <Pressable>
               <CoinCardLarge coin={coin} />
             </Pressable>
