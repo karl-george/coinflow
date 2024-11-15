@@ -10,6 +10,8 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ActivityIndicator, View } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,7 @@ const InitialLayout = () => {
     Montserrat_700Bold,
   });
 
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -38,25 +40,30 @@ const InitialLayout = () => {
     }
   }, [fontsLoaded]);
 
+  useEffect(() => {
+    // if (isSignedIn) {
+    //   router.replace('/(auth)/(tabs)');
+    // } else if (!isSignedIn) {
+    //   router.replace('/');
+    // }
+  }, [isSignedIn]);
+
   if (!fontsLoaded) {
     return null;
   }
 
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    if (isSignedIn) {
-      router.replace('/(auth)/(tabs)');
-    } else if (!isSignedIn) {
-      router.replace('/');
-    }
-  }, [isSignedIn]);
+  if (!isLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size='large' color={Colors.accent} />
+      </View>
+    );
+  }
 
   return (
     <Stack>
       <Stack.Screen name='index' options={{ headerShown: false }} />
       <Stack.Screen name='signin' options={{ headerShown: false }} />
-      <Stack.Screen name='signup' options={{ headerShown: false }} />
       <Stack.Screen name='(auth)/(tabs)' options={{ headerShown: false }} />
       <Stack.Screen name='(auth)/trending' />
     </Stack>
