@@ -1,16 +1,19 @@
 const API_KEY = process.env.CRYPTO_API_KEY_GECKO;
 
 export async function GET(request: Request) {
-  // const url = new URL(request.url);
-  // const limit = url.searchParams.get('limit') || 5;
+  const limit = 10;
 
-  // const response = await fetch(
-  //   `https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=${API_KEY}&limit=${limit}`
-  // );
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=${API_KEY}&limit=${limit}`
+    );
 
-  // const res = await response.json();
-  // return Response.json(res.data);
-  return Response.json(data);
+    const res = await response.json();
+    return Response.json(res);
+    // return Response.json(data);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const data = {
