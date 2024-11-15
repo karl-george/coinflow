@@ -27,6 +27,7 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
                 fontSize: 18,
                 fontWeight: 'semibold',
                 color: Colors.text,
+                fontFamily: 'Montserrat_600SemiBold',
               }}
             >
               {coin.item.symbol}
@@ -36,7 +37,9 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
                 fontSize: 16,
                 color: Colors.text_faded,
                 maxWidth: 78,
+                fontFamily: 'Montserrat_300Light',
               }}
+              numberOfLines={1}
             >
               {coin.item.name}
             </Text>
@@ -54,13 +57,19 @@ const CoinCardLarge = ({ coin }: { coin: Coin }) => {
             style={{
               fontSize: 18,
               color: Colors.text,
+              fontFamily: 'Montserrat_400Regular',
             }}
           >
             €{coin.item.data.price.toFixed(2)}
           </Text>
           <Text
             style={[
-              { fontSize: 14, color: Colors.accent, alignSelf: 'flex-end' },
+              {
+                fontSize: 14,
+                color: Colors.accent,
+                alignSelf: 'flex-end',
+                fontFamily: 'Montserrat_500Medium',
+              },
               parseFloat(
                 coin.item.data.price_change_percentage_24h.eur.toFixed(2)
               ) < 0
@@ -80,7 +89,7 @@ export default CoinCardLarge;
 
 const styles = StyleSheet.create({
   cardLargeBG: {
-    backgroundColor: Colors.card_light,
+    backgroundColor: Colors.card_dark,
     borderRadius: 12,
     marginBottom: 16,
     padding: 8,

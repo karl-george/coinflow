@@ -43,5 +43,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     overflow: 'hidden',
     flexWrap: 'wrap',
+    fontFamily: 'Montserrat_500SemiBold',
   },
 });

@@ -1,14 +1,14 @@
-import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { CartesianChart, Line, useChartPressState } from 'victory-native';
-import { Circle, matchFont } from '@shopify/react-native-skia';
 import { Colors } from '@/constants/Colors';
+import { Circle, matchFont } from '@shopify/react-native-skia';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import React from 'react';
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, {
   SharedValue,
   useAnimatedProps,
 } from 'react-native-reanimated';
+import { CartesianChart, Line, useChartPressState } from 'victory-native';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
@@ -69,10 +69,21 @@ const Chart = ({
         <>
           <View style={{ marginBottom: 16 }}>
             <Text
-              style={{ fontSize: 30, fontWeight: 'bold', color: Colors.text }}
+              style={{
+                fontSize: 30,
+                fontWeight: 'bold',
+                color: Colors.text,
+                fontFamily: 'Montserrat_700Bold',
+              }}
             >
               {name}{' '}
-              <Text style={{ color: Colors.accent, fontSize: 24 }}>
+              <Text
+                style={{
+                  color: Colors.accent,
+                  fontSize: 24,
+                  fontFamily: 'Montserrat_700Bold',
+                }}
+              >
                 {symbol?.toUpperCase()}
               </Text>
             </Text>
@@ -83,11 +94,20 @@ const Chart = ({
                     fontSize: 22,
                     fontWeight: 'bold',
                     color: Colors.text,
+                    fontFamily: 'Montserrat_600SemiBold',
                   }}
                 >
                   {tickers[tickers.length - 1].price.toFixed(2)} €
                 </Text>
-                <Text style={{ fontSize: 18, color: Colors.text }}>Today</Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: Colors.text,
+                    fontFamily: 'Montserrat_600SemiBold',
+                  }}
+                >
+                  Today
+                </Text>
               </View>
             )}
             {isActive && (
@@ -99,6 +119,7 @@ const Chart = ({
                     fontSize: 22,
                     fontWeight: 'bold',
                     color: Colors.text,
+                    fontFamily: 'Montserrat_600SemiBold',
                   }}
                   animatedProps={animatedText}
                 ></AnimatedTextInput>
@@ -149,7 +170,7 @@ export default Chart;
 
 const styles = StyleSheet.create({
   chart: {
-    backgroundColor: Colors.card_light,
+    backgroundColor: Colors.card_dark,
     borderRadius: 12,
     marginTop: 8,
     padding: 12,

@@ -4,6 +4,7 @@ import { useStore } from '@/store/savedStore';
 import { useAuth, useUser } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   Image,

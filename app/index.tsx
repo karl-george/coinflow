@@ -1,5 +1,5 @@
 import { Colors } from '@/constants/Colors';
-import { SignedOut } from '@clerk/clerk-expo';
+import { SignedIn, SignedOut } from '@clerk/clerk-expo';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -29,6 +29,14 @@ const Index = () => {
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
       </SignedOut>
+      <SignedIn>
+        <TouchableOpacity
+          onPress={() => router.push('/(auth)/(tabs)')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </SignedIn>
     </View>
   );
 };
