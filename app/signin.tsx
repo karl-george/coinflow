@@ -43,31 +43,32 @@ const Page = () => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#FFC0CB', '#FF69B4', '#FF1493']}
+        colors={['#111015', '#151D1F']}
+        start={[0, 0]}
+        end={[1, 1]}
         style={styles.gradient}
-      >
-        <View style={{ gap: 16 }}>
-          <TouchableOpacity
-            onPress={() => onSelectAuth(Strategy.Google)}
-            style={styles.button}
-          >
-            <Ionicons name='logo-google' size={24} />
-            <Text style={styles.buttonText}>Continue with Google</Text>
-          </TouchableOpacity>
+      />
+      <View style={{ gap: 16 }}>
+        <TouchableOpacity
+          onPress={() => onSelectAuth(Strategy.Google)}
+          style={styles.button}
+        >
+          <Ionicons name='logo-google' size={24} />
+          <Text style={styles.buttonText}>Continue with Google</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => onSelectAuth(Strategy.Github)}
-            style={styles.button}
-          >
-            <Ionicons name='logo-github' size={24} />
-            <Text style={styles.buttonText}>Continue with Github</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => onSelectAuth(Strategy.Github)}
+          style={styles.button}
+        >
+          <Ionicons name='logo-github' size={24} />
+          <Text style={styles.buttonText}>Continue with Github</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => router.back()}>
-            <Text style={styles.backText}>Go back</Text>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Text style={styles.backText}>Go back</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -84,10 +85,10 @@ const styles = StyleSheet.create({
   },
   gradient: {
     position: 'absolute',
+    top: 0,
     left: 0,
     right: 0,
-    top: 0,
-    height: 300,
+    bottom: 0,
   },
   button: {
     backgroundColor: Colors.accent,
