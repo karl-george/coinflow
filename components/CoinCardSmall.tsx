@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   coinCardSmall: {
     width: 84,
     height: 120,
-    backgroundColor: Colors.card_light,
+    backgroundColor: Colors.card_dark,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
