@@ -4,13 +4,13 @@ export async function GET(request: Request) {
   const limit = 10;
 
   try {
-    // const response = await fetch(
-    //   `https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=${API_KEY}&limit=${limit}`
-    // );
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=${API_KEY}&limit=${limit}`
+    );
 
-    // const res = await response.json();
-    // return Response.json(res);
-    return Response.json(data);
+    const res = await response.json();
+    return Response.json(res);
+    // return Response.json(data);
   } catch (error) {
     console.log(error);
   }
