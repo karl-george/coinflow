@@ -32,10 +32,12 @@ const Chart = ({
 
   const { state, isActive } = useChartPressState({ x: 0, y: { price: 0 } });
 
-  const { data: tickers } = useQuery({
+  const tickers = useQuery({
     queryKey: ['tickers'],
     queryFn: async (): Promise<any[]> =>
-      fetch(`/api/tickers`).then((res) => res.json()),
+      fetch(
+        `/api/tickers?symbol=${symbol.toLowerCase()}&name=${name.toLowerCase()}`
+      ).then((res) => res.json()),
   });
 
   const animatedText = useAnimatedProps(() => {
@@ -97,7 +99,7 @@ const Chart = ({
                     fontFamily: 'Montserrat_600SemiBold',
                   }}
                 >
-                  {tickers[tickers.length - 1].price.toFixed(2)} €
+                  {tickers.data[tickers.data.length - 1].price.toFixed(2)} €
                 </Text>
                 <Text
                   style={{
@@ -143,7 +145,7 @@ const Chart = ({
               formatYLabel: (v) => `${v} €`,
               formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
             }}
-            data={tickers!}
+            data={tickers.data!}
             xKey='timestamp'
             yKeys={['price']}
           >

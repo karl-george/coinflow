@@ -1,11 +1,15 @@
 export async function GET(request: Request) {
-  // const response = await fetch(
-  //   `https://api.coinpaprika.com/v1/tickers/btc-bitcoin/historical?start=2024-01-01&interval=1d`
-  // );
+  const url = new URL(request.url);
+  const symbol = url.searchParams.get('symbol');
+  const name = url.searchParams.get('name');
 
-  // const res = await response.json();
-  // return Response.json(res.data);
-  return Response.json(data);
+  const response = await fetch(
+    `https://api.coinpaprika.com/v1/tickers/${symbol}-${name}/historical?start=2024-01-01&interval=1d`
+  );
+
+  const res = await response.json();
+  return Response.json(res);
+  // return Response.json(data);
 }
 
 const data = [
