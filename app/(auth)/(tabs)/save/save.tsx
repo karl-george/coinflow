@@ -2,7 +2,6 @@ import CoinCardSmall from '@/components/CoinCardSmall';
 import { Colors } from '@/constants/Colors';
 import { useStore } from '@/store/savedStore';
 import { useQuery } from '@tanstack/react-query';
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,15 +10,17 @@ const Save = () => {
   const { top, bottom } = useSafeAreaInsets();
 
   const savedCoins = useStore((state: any) => state.savedCoins);
-  // const ids = savedCoins.join(',');
-
-  const ids = ['bitcoin', 'ethereum'];
+  const ids = savedCoins.join(',');
 
   const { data } = useQuery({
     queryKey: ['savedcoins', ids],
-    queryFn: () => fetch(`/api/savedcoins?id=${ids}`).then((res) => res.json()),
+    queryFn: () =>
+      fetch(`/api/savedcoins?ids=${ids}`).then((res) => res.json()),
     enabled: !!ids,
   });
+
+  console.log('ids', ids);
+  console.log('SavedCoins', savedCoins);
 
   return (
     <ScrollView style={[styles.container]}>

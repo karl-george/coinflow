@@ -21,13 +21,12 @@ const Profile = () => {
   const { user } = useUser();
 
   const savedCoins = useStore((state: any) => state.savedCoins);
-  // const ids = savedCoins.join(',');
-
-  const ids = ['bitcoin', 'ethereum'];
+  const ids = savedCoins.join(',');
 
   const { data } = useQuery({
     queryKey: ['savedcoins', ids],
-    queryFn: () => fetch(`/api/savedcoins?id=${ids}`).then((res) => res.json()),
+    queryFn: () =>
+      fetch(`/api/savedcoins?ids=${ids}`).then((res) => res.json()),
     enabled: !!ids,
   });
 
