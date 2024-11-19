@@ -1,16 +1,16 @@
 const API_KEY = process.env.CRYPTO_API_KEY_GECKO;
 
 export async function GET(request: Request) {
-  // const url = new URL(request.url);
-  // const ids = url.searchParams.get('ids') || '';
+  const url = new URL(request.url);
+  const ids = url.searchParams.get('ids') || '';
 
-  // const response = await fetch(
-  // `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&ids=${ids}&x_cg_demo_api_key=${API_KEY}`
-  // );
+  const response = await fetch(
+    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&ids=${ids}&x_cg_demo_api_key=${API_KEY}`
+  );
 
-  // const res = await response.json();
-  // return Response.json(res.data);
-  return Response.json(data);
+  const res = await response.json();
+  return Response.json(res);
+  // return Response.json(data);
 }
 
 const data = [
