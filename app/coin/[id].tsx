@@ -52,13 +52,13 @@ const Page = () => {
             >
               <TouchableOpacity onPress={() => toggleSaveCoin(data?.id)}>
                 {savedCoins.includes(data?.id) ? (
+                  <Ionicons name='bookmark' size={28} color={Colors.text} />
+                ) : (
                   <Ionicons
                     name='bookmark-outline'
                     size={28}
                     color={Colors.text_faded}
                   />
-                ) : (
-                  <Ionicons name='bookmark' size={28} color={Colors.text} />
                 )}
               </TouchableOpacity>
             </View>
