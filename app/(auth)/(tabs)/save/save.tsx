@@ -19,9 +19,6 @@ const Save = () => {
     enabled: !!ids,
   });
 
-  console.log('ids', ids);
-  console.log('SavedCoins', savedCoins);
-
   return (
     <ScrollView style={[styles.container]}>
       <View style={{ marginTop: top + 42 }}>
